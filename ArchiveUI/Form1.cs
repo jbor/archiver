@@ -137,5 +137,10 @@ namespace ArchiveUI
         {
             Parameters[counter].Comments = textBoxComments.Text;
         }
+
+        private void toolStripAbout_Click(object sender, EventArgs e)
+        {
+            new FormAbout().ShowDialog();
+        }
     }
 }

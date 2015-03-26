@@ -280,6 +280,7 @@
             this.toolStripAbout.Name = "toolStripAbout";
             this.toolStripAbout.Size = new System.Drawing.Size(152, 22);
             this.toolStripAbout.Text = "About";
+            this.toolStripAbout.Click += new System.EventHandler(this.toolStripAbout_Click);
             // 
             // toolStripLoad
             // 
