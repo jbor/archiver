@@ -29,11 +29,12 @@
         private void InitializeComponent()
         {
             this.buttonClose = new System.Windows.Forms.Button();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // buttonClose
             // 
-            this.buttonClose.Location = new System.Drawing.Point(104, 145);
+            this.buttonClose.Location = new System.Drawing.Point(104, 159);
             this.buttonClose.Name = "buttonClose";
             this.buttonClose.Size = new System.Drawing.Size(75, 23);
             this.buttonClose.TabIndex = 0;
@@ -41,11 +42,21 @@
             this.buttonClose.UseVisualStyleBackColor = true;
             this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
             // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(12, 12);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.ReadOnly = true;
+            this.richTextBox1.Size = new System.Drawing.Size(260, 139);
+            this.richTextBox1.TabIndex = 1;
+            this.richTextBox1.Text = "vhmbnmmbn\nl\';l\';l\'\n";
+            // 
             // FormAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 192);
+            this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.buttonClose);
             this.Name = "FormAbout";
             this.Text = "FormAbout";
@@ -56,5 +67,6 @@
         #endregion
 
         private System.Windows.Forms.Button buttonClose;
+        private System.Windows.Forms.RichTextBox richTextBox1;
     }
 }

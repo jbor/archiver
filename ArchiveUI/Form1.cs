@@ -63,8 +63,8 @@ namespace ArchiveUI
         {
             //Zootje, maar het werkt...
             CleanupForm();
-            if (Parameters.Count() > 0) { Parameters = Parameters.Where((source, index) => index != counter).ToArray(); } 
-            if (counter > 0) { counter--; }        
+            if (Parameters.Count() > 0) { Parameters = Parameters.Where((source, index) => index != counter).ToArray(); }
+            if (counter == Parameters.Count()) { counter--; }        
             if (Parameters.Count() > 0) { FillData(); }
             if (Parameters.Count() == 0)
             {
@@ -90,6 +90,11 @@ namespace ArchiveUI
         private void toolStripExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void toolStripAbout_Click(object sender, EventArgs e)
+        {
+            new FormAbout().ShowDialog();
         }
 
         //Aanpassingen in de velden valideren en bijwerken, kijken of dit makkelijker/korter kan in C#...
@@ -138,9 +143,6 @@ namespace ArchiveUI
             Parameters[counter].Comments = textBoxComments.Text;
         }
 
-        private void toolStripAbout_Click(object sender, EventArgs e)
-        {
-            new FormAbout().ShowDialog();
-        }
+
     }
 }
