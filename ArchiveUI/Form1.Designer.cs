@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.buttonNext = new System.Windows.Forms.Button();
             this.ParameterNo = new System.Windows.Forms.Label();
             this.textBoxProcesDir = new System.Windows.Forms.TextBox();
@@ -51,14 +52,16 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLoad = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSave = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripExit = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.buttonDel = new System.Windows.Forms.Button();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonNext
@@ -74,7 +77,7 @@
             // ParameterNo
             // 
             this.ParameterNo.AutoSize = true;
-            this.ParameterNo.Location = new System.Drawing.Point(353, 305);
+            this.ParameterNo.Location = new System.Drawing.Point(350, 302);
             this.ParameterNo.Name = "ParameterNo";
             this.ParameterNo.Size = new System.Drawing.Size(18, 13);
             this.ParameterNo.TabIndex = 2;
@@ -84,15 +87,15 @@
             // 
             this.textBoxProcesDir.Location = new System.Drawing.Point(70, 98);
             this.textBoxProcesDir.Name = "textBoxProcesDir";
-            this.textBoxProcesDir.Size = new System.Drawing.Size(301, 20);
+            this.textBoxProcesDir.Size = new System.Drawing.Size(283, 20);
             this.textBoxProcesDir.TabIndex = 3;
-            this.textBoxProcesDir.Validated += new System.EventHandler(this.textBoxProcesDir_Validated);
+            this.textBoxProcesDir.TextChanged += new System.EventHandler(this.textBoxProcesDir_TextChanged);
             // 
             // textBoxArchiveDir
             // 
             this.textBoxArchiveDir.Location = new System.Drawing.Point(70, 120);
             this.textBoxArchiveDir.Name = "textBoxArchiveDir";
-            this.textBoxArchiveDir.Size = new System.Drawing.Size(301, 20);
+            this.textBoxArchiveDir.Size = new System.Drawing.Size(283, 20);
             this.textBoxArchiveDir.TabIndex = 4;
             this.textBoxArchiveDir.Validated += new System.EventHandler(this.textBoxArchiveDir_Validated);
             // 
@@ -110,6 +113,7 @@
             // 
             // comboBoxTimespan
             // 
+            this.comboBoxTimespan.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxTimespan.FormattingEnabled = true;
             this.comboBoxTimespan.Items.AddRange(new object[] {
             "D",
@@ -117,9 +121,11 @@
             "M",
             "Y"});
             this.comboBoxTimespan.Location = new System.Drawing.Point(70, 144);
+            this.comboBoxTimespan.MaxDropDownItems = 4;
             this.comboBoxTimespan.Name = "comboBoxTimespan";
             this.comboBoxTimespan.Size = new System.Drawing.Size(43, 21);
             this.comboBoxTimespan.TabIndex = 7;
+            this.comboBoxTimespan.SelectedIndexChanged += new System.EventHandler(this.comboBoxTimespan_SelectedIndexChanged);
             this.comboBoxTimespan.Validated += new System.EventHandler(this.comboBoxTimespan_Validated);
             // 
             // textBoxExclude
@@ -212,7 +218,7 @@
             this.textBoxComments.Multiline = true;
             this.textBoxComments.Name = "textBoxComments";
             this.textBoxComments.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxComments.Size = new System.Drawing.Size(301, 35);
+            this.textBoxComments.Size = new System.Drawing.Size(283, 35);
             this.textBoxComments.TabIndex = 17;
             this.textBoxComments.Validated += new System.EventHandler(this.textBoxComments_Validated);
             // 
@@ -231,7 +237,7 @@
             this.textBoxRetention.Name = "textBoxRetention";
             this.textBoxRetention.Size = new System.Drawing.Size(34, 20);
             this.textBoxRetention.TabIndex = 20;
-            this.textBoxRetention.Validated += new System.EventHandler(this.textBoxRetention_Validated);
+            this.textBoxRetention.TextChanged += new System.EventHandler(this.textBoxRetention_TextChanged);
             // 
             // label8
             // 
@@ -258,7 +264,7 @@
             this.loadToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(390, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(378, 24);
             this.menuStrip1.TabIndex = 23;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -278,34 +284,44 @@
             // toolStripAbout
             // 
             this.toolStripAbout.Name = "toolStripAbout";
-            this.toolStripAbout.Size = new System.Drawing.Size(152, 22);
+            this.toolStripAbout.Size = new System.Drawing.Size(107, 22);
             this.toolStripAbout.Text = "About";
             this.toolStripAbout.Click += new System.EventHandler(this.toolStripAbout_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(104, 6);
             // 
             // toolStripLoad
             // 
             this.toolStripLoad.Name = "toolStripLoad";
-            this.toolStripLoad.Size = new System.Drawing.Size(152, 22);
+            this.toolStripLoad.Size = new System.Drawing.Size(107, 22);
             this.toolStripLoad.Text = "Load";
             this.toolStripLoad.Click += new System.EventHandler(this.toolStripMenuLoad_Click);
             // 
             // toolStripSave
             // 
             this.toolStripSave.Name = "toolStripSave";
-            this.toolStripSave.Size = new System.Drawing.Size(152, 22);
+            this.toolStripSave.Size = new System.Drawing.Size(107, 22);
             this.toolStripSave.Text = "Save";
             this.toolStripSave.Click += new System.EventHandler(this.toolStripSave_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(104, 6);
             // 
             // toolStripExit
             // 
             this.toolStripExit.Name = "toolStripExit";
-            this.toolStripExit.Size = new System.Drawing.Size(152, 22);
+            this.toolStripExit.Size = new System.Drawing.Size(107, 22);
             this.toolStripExit.Text = "Exit";
             this.toolStripExit.Click += new System.EventHandler(this.toolStripExit_Click);
             // 
             // buttonAdd
             // 
-            this.buttonAdd.Location = new System.Drawing.Point(218, 36);
+            this.buttonAdd.Location = new System.Drawing.Point(229, 36);
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(23, 23);
             this.buttonAdd.TabIndex = 24;
@@ -315,7 +331,7 @@
             // 
             // buttonDel
             // 
-            this.buttonDel.Location = new System.Drawing.Point(241, 36);
+            this.buttonDel.Location = new System.Drawing.Point(251, 36);
             this.buttonDel.Name = "buttonDel";
             this.buttonDel.Size = new System.Drawing.Size(22, 23);
             this.buttonDel.TabIndex = 25;
@@ -323,21 +339,16 @@
             this.buttonDel.UseVisualStyleBackColor = true;
             this.buttonDel.Click += new System.EventHandler(this.buttonDel_Click);
             // 
-            // toolStripSeparator1
+            // errorProvider1
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            this.errorProvider1.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.errorProvider1.ContainerControl = this;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(390, 332);
+            this.ClientSize = new System.Drawing.Size(378, 332);
             this.Controls.Add(this.buttonDel);
             this.Controls.Add(this.buttonAdd);
             this.Controls.Add(this.comboBoxInterfaceName);
@@ -365,6 +376,7 @@
             this.Name = "Form1";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -377,7 +389,6 @@
         private System.Windows.Forms.TextBox textBoxProcesDir;
         private System.Windows.Forms.TextBox textBoxArchiveDir;
         private System.Windows.Forms.CheckBox checkBoxRecursive;
-        private System.Windows.Forms.ComboBox comboBoxTimespan;
         private System.Windows.Forms.TextBox textBoxExclude;
         private System.Windows.Forms.TextBox textBoxInclude;
         private System.Windows.Forms.Button buttonPrev;
@@ -402,6 +413,8 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripAbout;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.ComboBox comboBoxTimespan;
 
     }
 }

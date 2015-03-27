@@ -28,47 +28,7 @@ namespace ArchiveUI
         int counter;
         Parameter[] Parameters;
 
-        //Leegmaken en vullen van het formulier
-        private void CleanupForm()
-        {
-            comboBoxInterfaceName.Text = "";
-            textBoxProcesDir.Text = "";
-            textBoxArchiveDir.Text = "";
-            comboBoxTimespan.Text = "";
-            checkBoxRecursive.Checked = false;
-            textBoxRetention.Text = "";
-            textBoxInclude.Text = "";
-            textBoxExclude.Text = "";
-            textBoxComments.Text = "";
-        }
-
-        private void FillComboBox()
-        {
-            comboBoxInterfaceName.Items.Clear();
-            if (Parameters.Count() > 1)
-            {
-                foreach (Parameter item in Parameters)
-                {
-                    if (item.InterfaceName != null) { comboBoxInterfaceName.Items.Add(item.InterfaceName); } else { comboBoxInterfaceName.Items.Add(""); }
-                }
-            }
-        }
-
-        private void FillData()
-        {
-            ParameterNo.Text = (counter + 1).ToString();
-            CleanupForm();
-            FillComboBox();
-            comboBoxInterfaceName.Text = Parameters[counter].InterfaceName;
-            textBoxProcesDir.Text = Parameters[counter].ProcesDir;
-            textBoxArchiveDir.Text = Parameters[counter].ArchiveDir;
-            comboBoxTimespan.Text = Parameters[counter].Timespan;
-            if (Parameters[counter].Recursive == "true") { checkBoxRecursive.Checked = true; }
-            textBoxRetention.Text = Parameters[counter].Retention;
-            textBoxInclude.Text = Parameters[counter].Include;
-            textBoxExclude.Text = Parameters[counter].Exclude;
-            textBoxComments.Text = Parameters[counter].Comments;
-        }
+        
 
     
         public class Parameter
@@ -110,8 +70,8 @@ namespace ArchiveUI
                             case "ArchiveDir":
                                 p[2] = xmlNode.ChildNodes[i].InnerText;
                                 break;
-                            case "Timespan":
-                                p[3] = xmlNode.ChildNodes[i].InnerText;
+                            case "TimeSpan":
+                                p[3] = xmlNode.ChildNodes[i].InnerText; 
                                 break;
                             case "Recursive":
                                 p[4] = xmlNode.ChildNodes[i].InnerText;
@@ -132,6 +92,8 @@ namespace ArchiveUI
                                 break;
                         }
                     }
+
+                    if (p[3] == null) { p[3] = "D"; }
                     Params[c] = new Parameter()
                     {
                         InterfaceName = p[0],
