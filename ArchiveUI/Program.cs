@@ -21,7 +21,7 @@ namespace ArchiveUI
             Application.Run(new Form1());
         }
     }
-    
+
     public partial class Form1
     {
         string file;
@@ -45,7 +45,8 @@ namespace ArchiveUI
         private void FillComboBox()
         {
             comboBoxInterfaceName.Items.Clear();
-            if (Parameters.Count() > 1) {
+            if (Parameters.Count() > 1)
+            {
                 foreach (Parameter item in Parameters)
                 {
                     if (item.InterfaceName != null) { comboBoxInterfaceName.Items.Add(item.InterfaceName); } else { comboBoxInterfaceName.Items.Add(""); }
@@ -69,6 +70,7 @@ namespace ArchiveUI
             textBoxComments.Text = Parameters[counter].Comments;
         }
 
+    
         public class Parameter
         {
             public string InterfaceName { get; set; }
@@ -100,7 +102,6 @@ namespace ArchiveUI
                         switch (xmlNode.ChildNodes[i].LocalName.ToString())
                         {
                             case "InterfaceName":
-                                comboBoxInterfaceName.Items.Add(xmlNode.ChildNodes[i].InnerText);
                                 p[0] = xmlNode.ChildNodes[i].InnerText;
                                 break;
                             case "ProcesDir":

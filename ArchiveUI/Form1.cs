@@ -57,6 +57,7 @@ namespace ArchiveUI
             counter = Parameters.Count();
             Array.Resize(ref Parameters, counter + 1);
             Parameters[counter] = new Parameter() { };
+            FillComboBox();
         }
 
         private void buttonDel_Click(object sender, EventArgs e)
@@ -64,12 +65,12 @@ namespace ArchiveUI
             //Zootje, maar het werkt...
             CleanupForm();
             if (Parameters.Count() > 0) { Parameters = Parameters.Where((source, index) => index != counter).ToArray(); }
-            if (counter == Parameters.Count()) { counter--; }        
+            if (counter == Parameters.Count() && counter > 0) { counter--; }        
             if (Parameters.Count() > 0) { FillData(); }
             if (Parameters.Count() == 0)
             {
-                Array.Resize(ref Parameters, counter + 1);
-                Parameters[counter] = new Parameter() { };
+                Array.Resize(ref Parameters, 1);
+                Parameters[0] = new Parameter() { };
             }
         }
 
@@ -101,6 +102,7 @@ namespace ArchiveUI
         private void comboBoxInterfaceName_Validated(object sender, EventArgs e)
         {
             Parameters[counter].InterfaceName = comboBoxInterfaceName.Text;
+            FillComboBox();
         }
 
         private void textBoxProcesDir_Validated(object sender, EventArgs e)
