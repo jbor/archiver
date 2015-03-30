@@ -183,7 +183,10 @@ namespace ArchiveUI
 
         private void comboBoxTimespan_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Parameters[counter].Timespan = comboBoxTimespan.SelectedIndex;
+            if ((counter + 1).ToString() == ParameterNo.Text)
+            {
+                Parameters[counter].Timespan = comboBoxTimespan.SelectedIndex;
+            }
         }
 
         //Aanpassingen in de velden valideren en bijwerken, kijken of dit makkelijker/korter kan in C#...
