@@ -32,7 +32,7 @@ namespace ArchiveUI
             textBoxArchiveDir.Text = "";
             comboBoxTimespan.Text = "";
             checkBoxRecursive.Checked = false;
-            textBoxRetention.Text = "";
+            textBoxRetention.Text = "0";
             textBoxInclude.Text = "";
             textBoxExclude.Text = "";
             textBoxComments.Text = "";
@@ -51,8 +51,7 @@ namespace ArchiveUI
         }
 
         private void FillData()
-        {
-            
+        {            
             CleanupForm();
             ParameterNo.Text = (counter + 1).ToString();
             FillComboBox();
@@ -60,21 +59,18 @@ namespace ArchiveUI
             textBoxProcesDir.Text = Parameters[counter].ProcesDir;
             textBoxArchiveDir.Text = Parameters[counter].ArchiveDir;
             comboBoxTimespan.Text = Parameters[counter].Timespan; 
-            if (Parameters[counter].Recursive == "true") { checkBoxRecursive.Checked = true; }
-            textBoxRetention.Text = Parameters[counter].Retention;
+            checkBoxRecursive.Checked = Parameters[counter].Recursive;
+            textBoxRetention.Text = Parameters[counter].Retention.ToString();
             textBoxInclude.Text = Parameters[counter].Include;
             textBoxExclude.Text = Parameters[counter].Exclude;
             textBoxComments.Text = Parameters[counter].Comments;
-            ValidateForm();
-            
+            ValidateForm();           
         }
 
        
         private void ValidateForm()
         {
-                errorProvider1.Clear();
-
-            
+                errorProvider1.Clear();           
                 if (textBoxProcesDir.Text == "")
                 {
                     errorProvider1.SetError(textBoxProcesDir, textBoxProcesDir.Name + "Needs to contain a value.");
@@ -94,7 +90,8 @@ namespace ArchiveUI
         private Boolean Valid()
         { 
             ValidateForm();
-            if (errorProvider1.GetError(textBoxProcesDir) == "") { return true; } else { return true; }
+            if (errorProvider1.GetError(textBoxProcesDir) == "" && errorProvider1.GetError(textBoxRetention) == "" && errorProvider1.GetError(comboBoxInterfaceName) == "") 
+            { return true; } else { return false; }
         }
 
         //Hier komende de akties aan de knoppen
@@ -106,7 +103,6 @@ namespace ArchiveUI
                 counter++;
                 FillData();
             }
-            //textBoxComments.Text = errorProvider1.GetError(textBoxProcesDir);
 
         }
 
@@ -132,12 +128,14 @@ namespace ArchiveUI
         {
             if (Valid())
             {
-                CleanupForm();
+                counter = (Parameters.Count());
+                CleanupForm();             
                 ParameterNo.Text = (Parameters.Count() + 1).ToString();
-                counter = Parameters.Count();
                 Array.Resize(ref Parameters, counter + 1);
                 Parameters[counter] = new Parameter() { };
+                Parameters[counter].Timespan = "D";
                 FillComboBox();
+                ValidateForm();
             }
         }
 
@@ -183,63 +181,83 @@ namespace ArchiveUI
             new FormAbout().ShowDialog();
         }
 
-        //Aanpassingen in de velden valideren en bijwerken, kijken of dit makkelijker/korter kan in C#...
-        private void comboBoxInterfaceName_Validated(object sender, EventArgs e)
-        {
-            Parameters[counter].InterfaceName = comboBoxInterfaceName.Text;
-            FillComboBox();
-        }
-
-        private void textBoxArchiveDir_Validated(object sender, EventArgs e)
-        {
-            Parameters[counter].ArchiveDir = textBoxArchiveDir.Text;
-        }
-
-        private void comboBoxTimespan_Validated(object sender, EventArgs e)
-        {
-            Parameters[counter].Timespan = comboBoxTimespan.Text;
-        }
-
-        private void checkBoxRecursive_Validated(object sender, EventArgs e)
-        {
-            if (checkBoxRecursive.Checked == true) { Parameters[counter].Recursive = "true"; } else { Parameters[counter].Recursive = "false"; }            
-        }
-
-        private void textBoxInclude_Validated(object sender, EventArgs e)
-        {
-            Parameters[counter].Include = textBoxInclude.Text;
-        }
-
-        private void textBoxExclude_Validated(object sender, EventArgs e)
-        {
-            Parameters[counter].Exclude = textBoxExclude.Text;
-        }
-
-        private void textBoxComments_Validated(object sender, EventArgs e)
-        {
-            Parameters[counter].Comments = textBoxComments.Text;
-        }
-
-        private void textBoxProcesDir_TextChanged(object sender, EventArgs e)
-        {           
-            Parameters[counter].ProcesDir = textBoxProcesDir.Text;
-            ValidateForm(); 
-        }
-
         private void comboBoxTimespan_SelectedIndexChanged(object sender, EventArgs e)
         {
             Parameters[counter].Timespan = comboBoxTimespan.Text;
-            //ValidateForm(); 
         }
 
+        //Aanpassingen in de velden valideren en bijwerken, kijken of dit makkelijker/korter kan in C#...
+        private void textBoxProcesDir_TextChanged(object sender, EventArgs e)
+        {
+            if ((counter + 1).ToString() == ParameterNo.Text)
+            {
+                Parameters[counter].ProcesDir = textBoxProcesDir.Text;
+                ValidateForm();
+            }
+        }
+        
+               
         private void textBoxRetention_TextChanged(object sender, EventArgs e)
+        {   double num;
+            if ((counter+1).ToString() == ParameterNo.Text && double.TryParse(textBoxRetention.Text, out num))
+            {
+                Parameters[counter].Retention = Convert.ToInt16(textBoxRetention.Text);
+                ValidateForm();
+            }
+        }
+
+        private void comboBoxInterfaceName_TextChanged(object sender, EventArgs e)
+        {
+            if ((counter + 1).ToString() == ParameterNo.Text)
+            {
+                Parameters[counter].InterfaceName = comboBoxInterfaceName.Text;
+                ValidateForm();
+            }          
+        }
+
+        private void textBoxArchiveDir_TextChanged(object sender, EventArgs e)
         {
             if ((counter+1).ToString() == ParameterNo.Text)
             { 
-                Parameters[counter].Retention = textBoxRetention.Text;
-                textBoxComments.Text = Parameters[1].Retention;
+                Parameters[counter].ArchiveDir = textBoxArchiveDir.Text;
                 ValidateForm();
-            }
+            }       
+        }
+
+        private void textBoxComments_TextChanged(object sender, EventArgs e)
+        {
+            if ((counter + 1).ToString() == ParameterNo.Text)
+            {
+                Parameters[counter].Comments = textBoxComments.Text;
+                ValidateForm();
+            } 
+        }
+
+        private void checkBoxRecursive_CheckedChanged(object sender, EventArgs e)
+        {
+            if ((counter + 1).ToString() == ParameterNo.Text)
+            {
+                Parameters[counter].Recursive = checkBoxRecursive.Checked;
+                ValidateForm();
+            } 
+        }
+
+        private void textBoxInclude_TextChanged(object sender, EventArgs e)
+        {
+            if ((counter + 1).ToString() == ParameterNo.Text)
+            {
+                Parameters[counter].Include = textBoxInclude.Text;
+                ValidateForm();
+            } 
+        }
+
+        private void textBoxExclude_TextChanged(object sender, EventArgs e)
+        {
+            if ((counter + 1).ToString() == ParameterNo.Text)
+            {
+                Parameters[counter].Exclude = textBoxExclude.Text;
+                ValidateForm();
+            } 
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using System.IO;
 
 namespace ArchiveUI
 {
@@ -37,8 +38,8 @@ namespace ArchiveUI
             public string ProcesDir { get; set; }
             public string ArchiveDir { get; set; }
             public string Timespan { get; set; }
-            public string Recursive { get; set; }
-            public string Retention { get; set; }
+            public bool Recursive { get; set; }
+            public int Retention { get; set; }
             public string Include { get; set; }
             public string Exclude { get; set; }
             public string Comments { get; set; }
@@ -47,6 +48,9 @@ namespace ArchiveUI
         private Parameter[] GetXMLData()
         {
             file = "archive.xml";
+            if (File.Exists(file)) {
+
+            
             int c = 0;
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(file);
@@ -56,6 +60,8 @@ namespace ArchiveUI
                 if (xmlNode.HasChildNodes)
                 {
                     string[] p = new string[9];
+                    bool rec = new bool();
+                    int ret = new int();
                     for (int i = 0; i < xmlNode.ChildNodes.Count; i++)
                     {
                         //Console.WriteLine(xmlNode.ChildNodes[i].Name + ": " + xmlNode.ChildNodes[i].InnerText);
@@ -75,9 +81,11 @@ namespace ArchiveUI
                                 break;
                             case "Recursive":
                                 p[4] = xmlNode.ChildNodes[i].InnerText;
+                                if (xmlNode.ChildNodes[i].InnerText.ToLower() == "true") {rec=true;} else {rec=false;}
                                 break;
                             case "Retention":
                                 p[5] = xmlNode.ChildNodes[i].InnerText;
+                                ret = Convert.ToInt16(xmlNode.ChildNodes[i].InnerText);
                                 break;
                             case "Include":
                                 if (p[6] != null) { p[6] += "\r\n"; }
@@ -100,14 +108,14 @@ namespace ArchiveUI
                         ProcesDir = p[1],
                         ArchiveDir = p[2],
                         Timespan = p[3],
-                        Recursive = p[4],
-                        Retention = p[5],
+                        Recursive = rec,
+                        Retention = ret,
                         Include = p[6],
                         Exclude = p[7],
                         Comments = p[8]
                     };
                     c++;
-                }
+                } 
             }
             //Nu de array filteren
             c = 0;
@@ -116,6 +124,24 @@ namespace ArchiveUI
                 if (y == null) { Params = Params.Where((source, index) => index != c).ToArray(); } else { c++; }
             }
             return Params;
+            }
+            else 
+            {
+                Parameter[] Params = new Parameter[1];
+                Params[0] = new Parameter()
+                {
+                    InterfaceName = "",
+                    ProcesDir = "",
+                    ArchiveDir = "",
+                    Timespan = "D",
+                    Recursive = false,
+                    Retention = 0,
+                    Include = "",
+                    Exclude = "",
+                    Comments = ""
+                };
+                return Params; 
+            }
         }
 
         private void WriteXMLData()
@@ -138,8 +164,8 @@ namespace ArchiveUI
                     writer.WriteElementString("ProcesDir", Parameters[i].ProcesDir);
                     writer.WriteElementString("ArchiveDir", Parameters[i].ArchiveDir);
                     writer.WriteElementString("TimeSpan", Parameters[i].Timespan);
-                    writer.WriteElementString("Recursive", Parameters[i].Recursive);
-                    writer.WriteElementString("Retention", Parameters[i].Retention);
+                    writer.WriteElementString("Recursive", Parameters[i].Recursive.ToString());
+                    writer.WriteElementString("Retention", Parameters[i].Retention.ToString());
 
                     if (Parameters[i].Include != null)
                     {

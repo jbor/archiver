@@ -97,7 +97,7 @@
             this.textBoxArchiveDir.Name = "textBoxArchiveDir";
             this.textBoxArchiveDir.Size = new System.Drawing.Size(283, 20);
             this.textBoxArchiveDir.TabIndex = 4;
-            this.textBoxArchiveDir.Validated += new System.EventHandler(this.textBoxArchiveDir_Validated);
+            this.textBoxArchiveDir.TextChanged += new System.EventHandler(this.textBoxArchiveDir_TextChanged);
             // 
             // checkBoxRecursive
             // 
@@ -109,7 +109,7 @@
             this.checkBoxRecursive.TabIndex = 6;
             this.checkBoxRecursive.Text = "Recursive";
             this.checkBoxRecursive.UseVisualStyleBackColor = true;
-            this.checkBoxRecursive.Validated += new System.EventHandler(this.checkBoxRecursive_Validated);
+            this.checkBoxRecursive.CheckedChanged += new System.EventHandler(this.checkBoxRecursive_CheckedChanged);
             // 
             // comboBoxTimespan
             // 
@@ -126,7 +126,6 @@
             this.comboBoxTimespan.Size = new System.Drawing.Size(43, 21);
             this.comboBoxTimespan.TabIndex = 7;
             this.comboBoxTimespan.SelectedIndexChanged += new System.EventHandler(this.comboBoxTimespan_SelectedIndexChanged);
-            this.comboBoxTimespan.Validated += new System.EventHandler(this.comboBoxTimespan_Validated);
             // 
             // textBoxExclude
             // 
@@ -136,7 +135,7 @@
             this.textBoxExclude.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBoxExclude.Size = new System.Drawing.Size(158, 69);
             this.textBoxExclude.TabIndex = 8;
-            this.textBoxExclude.Validated += new System.EventHandler(this.textBoxExclude_Validated);
+            this.textBoxExclude.TextChanged += new System.EventHandler(this.textBoxExclude_TextChanged);
             // 
             // textBoxInclude
             // 
@@ -146,7 +145,7 @@
             this.textBoxInclude.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBoxInclude.Size = new System.Drawing.Size(157, 69);
             this.textBoxInclude.TabIndex = 9;
-            this.textBoxInclude.Validated += new System.EventHandler(this.textBoxInclude_Validated);
+            this.textBoxInclude.TextChanged += new System.EventHandler(this.textBoxInclude_TextChanged);
             // 
             // buttonPrev
             // 
@@ -220,7 +219,7 @@
             this.textBoxComments.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBoxComments.Size = new System.Drawing.Size(283, 35);
             this.textBoxComments.TabIndex = 17;
-            this.textBoxComments.Validated += new System.EventHandler(this.textBoxComments_Validated);
+            this.textBoxComments.TextChanged += new System.EventHandler(this.textBoxComments_TextChanged);
             // 
             // label7
             // 
@@ -256,7 +255,7 @@
             this.comboBoxInterfaceName.Size = new System.Drawing.Size(142, 21);
             this.comboBoxInterfaceName.TabIndex = 22;
             this.comboBoxInterfaceName.SelectionChangeCommitted += new System.EventHandler(this.comboBoxInterfaceName_SelectionChangeCommitted);
-            this.comboBoxInterfaceName.Validated += new System.EventHandler(this.comboBoxInterfaceName_Validated);
+            this.comboBoxInterfaceName.TextChanged += new System.EventHandler(this.comboBoxInterfaceName_TextChanged);
             // 
             // menuStrip1
             // 
