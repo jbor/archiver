@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
-using System.IO;
 
 namespace ArchiveUI
 {
@@ -28,16 +28,13 @@ namespace ArchiveUI
         string file;
         int counter;
         Parameter[] Parameters;
-
-        
-
     
         public class Parameter
         {
             public string InterfaceName { get; set; }
             public string ProcesDir { get; set; }
             public string ArchiveDir { get; set; }
-            public string Timespan { get; set; }
+            public int Timespan { get; set; }
             public bool Recursive { get; set; }
             public int Retention { get; set; }
             public string Include { get; set; }
@@ -50,80 +47,95 @@ namespace ArchiveUI
             file = "archive.xml";
             if (File.Exists(file)) {
 
-            
-            int c = 0;
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(file);
-            Parameter[] Params = new Parameter[xmlDoc.DocumentElement.ChildNodes.Count]; //Deze wordt later nog opgeschoond van lege records
-            foreach (XmlNode xmlNode in xmlDoc.DocumentElement.ChildNodes)
-            {
-                if (xmlNode.HasChildNodes)
+           
+                int c = 0;
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load(file);
+                Parameter[] Params = new Parameter[xmlDoc.DocumentElement.ChildNodes.Count]; //Deze wordt later nog opgeschoond van lege records
+                foreach (XmlNode xmlNode in xmlDoc.DocumentElement.ChildNodes)
                 {
-                    string[] p = new string[9];
-                    bool rec = new bool();
-                    int ret = new int();
-                    for (int i = 0; i < xmlNode.ChildNodes.Count; i++)
+                    if (xmlNode.HasChildNodes)
                     {
-                        //Console.WriteLine(xmlNode.ChildNodes[i].Name + ": " + xmlNode.ChildNodes[i].InnerText);
-                        switch (xmlNode.ChildNodes[i].LocalName.ToString())
+                        string[] p = new string[6];
+                        bool rec = new bool();
+                        int tspa = new int();
+                        int ret = new int();
+                        for (int i = 0; i < xmlNode.ChildNodes.Count; i++)
                         {
-                            case "InterfaceName":
-                                p[0] = xmlNode.ChildNodes[i].InnerText;
-                                break;
-                            case "ProcesDir":
-                                p[1] = xmlNode.ChildNodes[i].InnerText;
-                                break;
-                            case "ArchiveDir":
-                                p[2] = xmlNode.ChildNodes[i].InnerText;
-                                break;
-                            case "TimeSpan":
-                                p[3] = xmlNode.ChildNodes[i].InnerText; 
-                                break;
-                            case "Recursive":
-                                p[4] = xmlNode.ChildNodes[i].InnerText;
-                                if (xmlNode.ChildNodes[i].InnerText.ToLower() == "true") {rec=true;} else {rec=false;}
-                                break;
-                            case "Retention":
-                                p[5] = xmlNode.ChildNodes[i].InnerText;
-                                ret = Convert.ToInt16(xmlNode.ChildNodes[i].InnerText);
-                                break;
-                            case "Include":
-                                if (p[6] != null) { p[6] += "\r\n"; }
-                                p[6] = p[6] + xmlNode.ChildNodes[i].InnerText;
-                                break;
-                            case "Exclude":
-                                if (p[7] != null) { p[7] += "\r\n"; }
-                                p[7] = p[7] + xmlNode.ChildNodes[i].InnerText;
-                                break;
-                            case "Comments":
-                                p[8] = xmlNode.ChildNodes[i].InnerText;
-                                break;
+                            switch (xmlNode.ChildNodes[i].LocalName.ToString())
+                            {
+                                case "InterfaceName":
+                                    p[0] = xmlNode.ChildNodes[i].InnerText;
+                                    break;
+                                case "ProcesDir":
+                                    p[1] = xmlNode.ChildNodes[i].InnerText;
+                                    break;
+                                case "ArchiveDir":
+                                    p[2] = xmlNode.ChildNodes[i].InnerText;
+                                    break;
+                                case "TimeSpan":
+                                    switch (xmlNode.ChildNodes[i].InnerText.ToString())
+                                    {
+                                        case "D": 
+                                            tspa = 0;
+                                            break;
+                                        case "W":
+                                            tspa = 1;
+                                            break;
+                                        case "M":
+                                            tspa = 2;
+                                            break;
+                                        case "Y":
+                                            tspa = 3;
+                                            break;
+                                        default:
+                                            tspa = 0;
+                                            break;
+                                    }
+                                    break;
+                                case "Recursive":
+                                    if (xmlNode.ChildNodes[i].InnerText.ToLower() == "true") {rec=true;} else {rec=false;}
+                                    break;
+                                case "Retention":
+                                    ret = Convert.ToInt16(xmlNode.ChildNodes[i].InnerText);
+                                    break;
+                                case "Include":
+                                    if (p[3] != null) { p[3] += "\r\n"; }
+                                    p[3] = p[3] + xmlNode.ChildNodes[i].InnerText;
+                                    break;
+                                case "Exclude":
+                                    if (p[4] != null) { p[4] += "\r\n"; }
+                                    p[4] = p[4] + xmlNode.ChildNodes[i].InnerText;
+                                    break;
+                                case "Comments":
+                                    p[5] = xmlNode.ChildNodes[i].InnerText;
+                                    break;
+                            }
                         }
-                    }
 
-                    if (p[3] == null) { p[3] = "D"; }
-                    Params[c] = new Parameter()
-                    {
-                        InterfaceName = p[0],
-                        ProcesDir = p[1],
-                        ArchiveDir = p[2],
-                        Timespan = p[3],
-                        Recursive = rec,
-                        Retention = ret,
-                        Include = p[6],
-                        Exclude = p[7],
-                        Comments = p[8]
-                    };
-                    c++;
-                } 
-            }
-            //Nu de array filteren
-            c = 0;
-            foreach (Parameter y in Params)
-            {
-                if (y == null) { Params = Params.Where((source, index) => index != c).ToArray(); } else { c++; }
-            }
-            return Params;
+                        if (p[3] == null) { p[3] = "D"; }
+                        Params[c] = new Parameter()
+                        {
+                            InterfaceName = p[0],
+                            ProcesDir = p[1],
+                            ArchiveDir = p[2],
+                            Timespan = tspa,
+                            Recursive = rec,
+                            Retention = ret,
+                            Include = p[3],
+                            Exclude = p[4],
+                            Comments = p[5]
+                        };
+                        c++;    
+                    } 
+                }
+                //Nu de array filteren
+                c = 0;
+                foreach (Parameter y in Params)
+                {
+                    if (y == null) { Params = Params.Where((source, index) => index != c).ToArray(); } else { c++; }
+                }
+                return Params;
             }
             else 
             {
@@ -133,7 +145,7 @@ namespace ArchiveUI
                     InterfaceName = "",
                     ProcesDir = "",
                     ArchiveDir = "",
-                    Timespan = "D",
+                    Timespan = 1,
                     Recursive = false,
                     Retention = 0,
                     Include = "",
@@ -163,7 +175,24 @@ namespace ArchiveUI
                     writer.WriteElementString("InterfaceName", Parameters[i].InterfaceName);
                     writer.WriteElementString("ProcesDir", Parameters[i].ProcesDir);
                     writer.WriteElementString("ArchiveDir", Parameters[i].ArchiveDir);
-                    writer.WriteElementString("TimeSpan", Parameters[i].Timespan);
+                    switch (Parameters[i].Timespan)
+                    {
+                        case 0:
+                            writer.WriteElementString("TimeSpan", "D");
+                            break;
+                        case 1:
+                            writer.WriteElementString("TimeSpan", "W");
+                            break;
+                        case 2:
+                            writer.WriteElementString("TimeSpan", "M");
+                            break;
+                        case 3:
+                            writer.WriteElementString("TimeSpan", "Y");
+                            break;
+                        default:
+                            writer.WriteElementString("TimeSpan", "D");
+                            break;
+                    }
                     writer.WriteElementString("Recursive", Parameters[i].Recursive.ToString());
                     writer.WriteElementString("Retention", Parameters[i].Retention.ToString());
 

@@ -30,7 +30,7 @@ namespace ArchiveUI
             comboBoxInterfaceName.Text = "";
             textBoxProcesDir.Text = "";
             textBoxArchiveDir.Text = "";
-            comboBoxTimespan.Text = "";
+            comboBoxTimespan.SelectedIndex = 0;
             checkBoxRecursive.Checked = false;
             textBoxRetention.Text = "0";
             textBoxInclude.Text = "";
@@ -45,7 +45,7 @@ namespace ArchiveUI
             {
                 foreach (Parameter item in Parameters)
                 {
-                    if (item.InterfaceName != null) { comboBoxInterfaceName.Items.Add(item.InterfaceName); } else { comboBoxInterfaceName.Items.Add(""); }
+                    comboBoxInterfaceName.Items.Add(item.InterfaceName!=null ? item.InterfaceName : ""); 
                 }
             }
         }
@@ -58,7 +58,7 @@ namespace ArchiveUI
             comboBoxInterfaceName.Text = Parameters[counter].InterfaceName;
             textBoxProcesDir.Text = Parameters[counter].ProcesDir;
             textBoxArchiveDir.Text = Parameters[counter].ArchiveDir;
-            comboBoxTimespan.Text = Parameters[counter].Timespan; 
+            comboBoxTimespan.SelectedIndex = Parameters[counter].Timespan; 
             checkBoxRecursive.Checked = Parameters[counter].Recursive;
             textBoxRetention.Text = Parameters[counter].Retention.ToString();
             textBoxInclude.Text = Parameters[counter].Include;
@@ -133,7 +133,7 @@ namespace ArchiveUI
                 ParameterNo.Text = (Parameters.Count() + 1).ToString();
                 Array.Resize(ref Parameters, counter + 1);
                 Parameters[counter] = new Parameter() { };
-                Parameters[counter].Timespan = "D";
+                Parameters[counter].Timespan = 1;
                 FillComboBox();
                 ValidateForm();
             }
@@ -183,7 +183,7 @@ namespace ArchiveUI
 
         private void comboBoxTimespan_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Parameters[counter].Timespan = comboBoxTimespan.Text;
+            Parameters[counter].Timespan = comboBoxTimespan.SelectedIndex;
         }
 
         //Aanpassingen in de velden valideren en bijwerken, kijken of dit makkelijker/korter kan in C#...
