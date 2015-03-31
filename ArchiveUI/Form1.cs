@@ -53,7 +53,7 @@ namespace ArchiveUI
         private void FillData()
         {            
             CleanupForm();
-            ParameterNo.Text = (counter + 1).ToString();
+            
             FillComboBox();
             comboBoxInterfaceName.Text = Parameters[counter].InterfaceName;
             textBoxProcesDir.Text = Parameters[counter].ProcesDir;
@@ -64,7 +64,8 @@ namespace ArchiveUI
             textBoxInclude.Text = Parameters[counter].Include;
             textBoxExclude.Text = Parameters[counter].Exclude;
             textBoxComments.Text = Parameters[counter].Comments;
-            ValidateForm();           
+            //ParameterNo als laatste, ivm textchanged regels.
+            ParameterNo.Text = (counter + 1).ToString();       
         }
 
        
@@ -190,77 +191,64 @@ namespace ArchiveUI
         }
 
         //Aanpassingen in de velden valideren en bijwerken, kijken of dit makkelijker/korter kan in C#...
+
+        public void boxChanged()
+        {
+            double num;
+            if ((counter + 1).ToString() == ParameterNo.Text)
+            {                
+                Parameters[counter].InterfaceName = comboBoxInterfaceName.Text;
+                Parameters[counter].Comments = textBoxComments.Text;
+                Parameters[counter].ProcesDir = textBoxProcesDir.Text;
+                Parameters[counter].ArchiveDir = textBoxArchiveDir.Text;
+                if (double.TryParse(textBoxRetention.Text, out num)) { Parameters[counter].Retention = Convert.ToInt16(textBoxRetention.Text); }
+                Parameters[counter].Recursive = checkBoxRecursive.Checked;
+                Parameters[counter].Include = textBoxInclude.Text;
+                Parameters[counter].Exclude = textBoxExclude.Text; 
+            }  
+            ValidateForm();         
+        }
+
+
         private void textBoxProcesDir_TextChanged(object sender, EventArgs e)
         {
-            if ((counter + 1).ToString() == ParameterNo.Text)
-            {
-                Parameters[counter].ProcesDir = textBoxProcesDir.Text;
-                ValidateForm();
-            }
+            boxChanged();
         }
         
                
         private void textBoxRetention_TextChanged(object sender, EventArgs e)
-        {   double num;
-            if ((counter+1).ToString() == ParameterNo.Text && double.TryParse(textBoxRetention.Text, out num))
-            {
-                Parameters[counter].Retention = Convert.ToInt16(textBoxRetention.Text);
-                ValidateForm();
-            }
+        {
+            boxChanged();
         }
 
         private void comboBoxInterfaceName_TextChanged(object sender, EventArgs e)
         {
-            if ((counter + 1).ToString() == ParameterNo.Text)
-            {
-                Parameters[counter].InterfaceName = comboBoxInterfaceName.Text;
-                ValidateForm();
-            }          
+            boxChanged();     
         }
 
         private void textBoxArchiveDir_TextChanged(object sender, EventArgs e)
         {
-            if ((counter+1).ToString() == ParameterNo.Text)
-            { 
-                Parameters[counter].ArchiveDir = textBoxArchiveDir.Text;
-                ValidateForm();
-            }       
+            boxChanged();     
         }
 
         private void textBoxComments_TextChanged(object sender, EventArgs e)
         {
-            if ((counter + 1).ToString() == ParameterNo.Text)
-            {
-                Parameters[counter].Comments = textBoxComments.Text;
-                ValidateForm();
-            } 
+            boxChanged();
         }
 
         private void checkBoxRecursive_CheckedChanged(object sender, EventArgs e)
         {
-            if ((counter + 1).ToString() == ParameterNo.Text)
-            {
-                Parameters[counter].Recursive = checkBoxRecursive.Checked;
-                ValidateForm();
-            } 
+            boxChanged();
         }
 
         private void textBoxInclude_TextChanged(object sender, EventArgs e)
         {
-            if ((counter + 1).ToString() == ParameterNo.Text)
-            {
-                Parameters[counter].Include = textBoxInclude.Text;
-                ValidateForm();
-            } 
+            boxChanged();
         }
 
         private void textBoxExclude_TextChanged(object sender, EventArgs e)
         {
-            if ((counter + 1).ToString() == ParameterNo.Text)
-            {
-                Parameters[counter].Exclude = textBoxExclude.Text;
-                ValidateForm();
-            } 
+            boxChanged();
         }
     }
 }
