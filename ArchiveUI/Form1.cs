@@ -14,6 +14,7 @@ namespace ArchiveUI
     public partial class Form1 : Form
     {
 
+        Boolean Enable_edit;
               
         public Form1()
         {
@@ -51,7 +52,8 @@ namespace ArchiveUI
         }
 
         private void FillData()
-        {            
+        {
+            Enable_edit = false;
             CleanupForm();
             
             FillComboBox();
@@ -64,8 +66,8 @@ namespace ArchiveUI
             textBoxInclude.Text = Parameters[counter].Include;
             textBoxExclude.Text = Parameters[counter].Exclude;
             textBoxComments.Text = Parameters[counter].Comments;
-            //ParameterNo als laatste, ivm textchanged regels.
-            ParameterNo.Text = (counter + 1).ToString();       
+            ParameterNo.Text = (counter + 1).ToString();
+            Enable_edit = true;
         }
 
        
@@ -129,6 +131,7 @@ namespace ArchiveUI
         {
             if (Valid())
             {
+                Enable_edit = false;
                 counter = (Parameters.Count());
                 CleanupForm();             
                 ParameterNo.Text = (Parameters.Count() + 1).ToString();
@@ -137,6 +140,7 @@ namespace ArchiveUI
                 Parameters[counter].Timespan = 1;
                 FillComboBox();
                 ValidateForm();
+                Enable_edit = true;
             }
         }
 
@@ -144,7 +148,10 @@ namespace ArchiveUI
         {
             //Zootje, maar het werkt...
             CleanupForm();
-            if (Parameters.Count() > 0) { Parameters = Parameters.Where((source, index) => index != counter).ToArray(); }
+            if (Parameters.Count() > 0) 
+            { 
+                Parameters = Parameters.Where((source, index) => index != counter).ToArray();
+            }
             if (counter == Parameters.Count() && counter > 0) { counter--; }        
             if (Parameters.Count() > 0) { FillData(); }
             if (Parameters.Count() == 0)
@@ -191,11 +198,10 @@ namespace ArchiveUI
         }
 
         //Aanpassingen in de velden valideren en bijwerken, kijken of dit makkelijker/korter kan in C#...
-
         public void boxChanged()
         {
             double num;
-            if ((counter + 1).ToString() == ParameterNo.Text)
+            if (Enable_edit)
             {                
                 Parameters[counter].InterfaceName = comboBoxInterfaceName.Text;
                 Parameters[counter].Comments = textBoxComments.Text;
@@ -209,12 +215,10 @@ namespace ArchiveUI
             ValidateForm();         
         }
 
-
         private void textBoxProcesDir_TextChanged(object sender, EventArgs e)
         {
             boxChanged();
-        }
-        
+        }        
                
         private void textBoxRetention_TextChanged(object sender, EventArgs e)
         {

@@ -113,7 +113,6 @@ namespace ArchiveUI
                             }
                         }
 
-                        if (p[3] == null) { p[3] = "D"; }
                         Params[c] = new Parameter()
                         {
                             InterfaceName = p[0],
@@ -140,18 +139,7 @@ namespace ArchiveUI
             else 
             {
                 Parameter[] Params = new Parameter[1];
-                Params[0] = new Parameter()
-                {
-                    InterfaceName = "",
-                    ProcesDir = "",
-                    ArchiveDir = "",
-                    Timespan = 1,
-                    Recursive = false,
-                    Retention = 0,
-                    Include = "",
-                    Exclude = "",
-                    Comments = ""
-                };
+                Params[0] = new Parameter() {};
                 return Params; 
             }
         }
@@ -213,7 +201,6 @@ namespace ArchiveUI
                             writer.WriteElementString("Exclude", x);
                         }
                     }
-
                     writer.WriteElementString("Comments", Parameters[i].Comments);
                     writer.WriteEndElement();
                 }
