@@ -22,6 +22,8 @@ namespace ArchiveUI
             counter = 0;
             Parameters = GetXMLData();
             FillData();
+            //Hier moet dus nog wat mee
+            textBoxInterfaceName.Visible = false;
         }
 
         //Hier de functies voor het vullen van de velden
@@ -29,6 +31,7 @@ namespace ArchiveUI
         private void CleanupForm()
         {
             comboBoxInterfaceName.Text = "";
+            textBoxInterfaceName.Text = "";
             textBoxProcesDir.Text = "";
             textBoxArchiveDir.Text = "";
             comboBoxTimespan.SelectedIndex = 0;
@@ -57,6 +60,8 @@ namespace ArchiveUI
             CleanupForm();
             
             FillComboBox();
+            textBoxInterfaceName.Visible = false;
+            comboBoxInterfaceName.Visible = true;
             comboBoxInterfaceName.Text = Parameters[counter].InterfaceName;
             textBoxProcesDir.Text = Parameters[counter].ProcesDir;
             textBoxArchiveDir.Text = Parameters[counter].ArchiveDir;
@@ -78,23 +83,30 @@ namespace ArchiveUI
                 {
                     errorProvider1.SetError(textBoxProcesDir, textBoxProcesDir.Name + "Needs to contain a value.");
                 }
-                
-                if (comboBoxInterfaceName.Text == "")
+
+                if (comboBoxInterfaceName.Text == "" && comboBoxInterfaceName.Visible == true || textBoxInterfaceName.Text == "" && textBoxInterfaceName.Visible == true)
                 {
-                    errorProvider1.SetError(comboBoxInterfaceName, comboBoxInterfaceName.Name + "Needs to contain a value.");
-                }
+                    textBoxInterfaceName.Visible = true;
+                    comboBoxInterfaceName.Visible = false;
+                    errorProvider1.SetError(textBoxInterfaceName, textBoxInterfaceName.Name + "Needs to contain a value.");                    
+                } 
+
                 double num;
                 if ( !double.TryParse(textBoxRetention.Text, out num))
                 {
                     errorProvider1.SetError(textBoxRetention, textBoxRetention.Name + "Needs to contain a value.");
                 }
-             }
+        }
 
         private Boolean Valid()
         { 
             ValidateForm();
-            if (errorProvider1.GetError(textBoxProcesDir) == "" && errorProvider1.GetError(textBoxRetention) == "" && errorProvider1.GetError(comboBoxInterfaceName) == "") 
-            { return true; } else { return false; }
+            if (errorProvider1.GetError(textBoxProcesDir) == "" && errorProvider1.GetError(textBoxRetention) == "" && errorProvider1.GetError(comboBoxInterfaceName) == "" && errorProvider1.GetError(textBoxInterfaceName) == "") 
+            {
+                return true; } else 
+            {
+                return false; 
+            }
         }
 
         //Hier komende de akties aan de knoppen
@@ -146,7 +158,7 @@ namespace ArchiveUI
 
         private void buttonDel_Click(object sender, EventArgs e)
         {
-            //Zootje, maar het werkt...
+            //Zootje, maar het werkt... misschien nog eens naar kijken
             CleanupForm();
             if (Parameters.Count() > 0) 
             { 
@@ -189,13 +201,7 @@ namespace ArchiveUI
             new FormAbout().ShowDialog();
         }
 
-        private void comboBoxTimespan_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if ((counter + 1).ToString() == ParameterNo.Text)
-            {
-                Parameters[counter].Timespan = comboBoxTimespan.SelectedIndex;
-            }
-        }
+
 
         //Aanpassingen in de velden valideren en bijwerken, kijken of dit makkelijker/korter kan in C#...
         public void boxChanged()
@@ -210,9 +216,15 @@ namespace ArchiveUI
                 if (double.TryParse(textBoxRetention.Text, out num)) { Parameters[counter].Retention = Convert.ToInt16(textBoxRetention.Text); }
                 Parameters[counter].Recursive = checkBoxRecursive.Checked;
                 Parameters[counter].Include = textBoxInclude.Text;
-                Parameters[counter].Exclude = textBoxExclude.Text; 
+                Parameters[counter].Exclude = textBoxExclude.Text;
+                Parameters[counter].Timespan = comboBoxTimespan.SelectedIndex;
             }  
             ValidateForm();         
+        }
+
+        private void comboBoxTimespan_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            boxChanged();
         }
 
         private void textBoxProcesDir_TextChanged(object sender, EventArgs e)
@@ -227,7 +239,15 @@ namespace ArchiveUI
 
         private void comboBoxInterfaceName_TextChanged(object sender, EventArgs e)
         {
-            boxChanged();     
+            if (comboBoxInterfaceName.Text == "")
+            {
+                textBoxInterfaceName.Visible = true;
+                comboBoxInterfaceName.Visible = false;
+            }
+            else
+            {
+                boxChanged();
+            }     
         }
 
         private void textBoxArchiveDir_TextChanged(object sender, EventArgs e)
@@ -253,6 +273,26 @@ namespace ArchiveUI
         private void textBoxExclude_TextChanged(object sender, EventArgs e)
         {
             boxChanged();
+        }
+
+
+        private void textBoxInterfaceName_TextChanged(object sender, EventArgs e)
+        {
+            if (Enable_edit)
+            { 
+                if (textBoxInterfaceName.Text != "") 
+                {
+                    comboBoxInterfaceName.Text = textBoxInterfaceName.Text;
+                    textBoxInterfaceName.Text = "";
+                    textBoxInterfaceName.Visible = false;
+                    comboBoxInterfaceName.Visible = true;
+                    comboBoxInterfaceName.Select();
+                    //cursor verder laten gaan met de combobox.
+                    comboBoxInterfaceName.Select(comboBoxInterfaceName.Text.Length, 0);
+     
+                } 
+                else { errorProvider1.SetError(textBoxInterfaceName, textBoxInterfaceName.Name + "Needs to contain a value."); }
+            }
         }
     }
 }

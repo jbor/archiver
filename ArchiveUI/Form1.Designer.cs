@@ -60,6 +60,7 @@
             this.buttonAdd = new System.Windows.Forms.Button();
             this.buttonDel = new System.Windows.Forms.Button();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.textBoxInterfaceName = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
@@ -343,11 +344,20 @@
             this.errorProvider1.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             this.errorProvider1.ContainerControl = this;
             // 
+            // textBoxInterfaceName
+            // 
+            this.textBoxInterfaceName.Location = new System.Drawing.Point(70, 39);
+            this.textBoxInterfaceName.Name = "textBoxInterfaceName";
+            this.textBoxInterfaceName.Size = new System.Drawing.Size(142, 20);
+            this.textBoxInterfaceName.TabIndex = 26;
+            this.textBoxInterfaceName.TextChanged += new System.EventHandler(this.textBoxInterfaceName_TextChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(378, 332);
+            this.Controls.Add(this.textBoxInterfaceName);
             this.Controls.Add(this.buttonDel);
             this.Controls.Add(this.buttonAdd);
             this.Controls.Add(this.comboBoxInterfaceName);
@@ -414,6 +424,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.ComboBox comboBoxTimespan;
+        private System.Windows.Forms.TextBox textBoxInterfaceName;
 
     }
 }
