@@ -76,7 +76,7 @@ $rmcounter = 0
 $starttime = Get-Date
 
 # Import XML file with the configuration
-[xml]$def = Get-Content C:\eBankView\user\dagjobs\archive.xml
+[xml]$def = Get-Content archive.xml
 
 # Load Compression
 [Reflection.Assembly]::LoadWithPartialName( "System.IO.Compression.FileSystem" )|Out-Null

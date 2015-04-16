@@ -251,7 +251,7 @@
             // comboBoxInterfaceName
             // 
             this.comboBoxInterfaceName.FormattingEnabled = true;
-            this.comboBoxInterfaceName.Location = new System.Drawing.Point(70, 38);
+            this.comboBoxInterfaceName.Location = new System.Drawing.Point(70, 37);
             this.comboBoxInterfaceName.Name = "comboBoxInterfaceName";
             this.comboBoxInterfaceName.Size = new System.Drawing.Size(142, 21);
             this.comboBoxInterfaceName.TabIndex = 22;
@@ -346,10 +346,11 @@
             // 
             // textBoxInterfaceName
             // 
-            this.textBoxInterfaceName.Location = new System.Drawing.Point(70, 39);
+            this.textBoxInterfaceName.Location = new System.Drawing.Point(70, 38);
             this.textBoxInterfaceName.Name = "textBoxInterfaceName";
             this.textBoxInterfaceName.Size = new System.Drawing.Size(142, 20);
             this.textBoxInterfaceName.TabIndex = 26;
+            this.textBoxInterfaceName.Visible = false;
             this.textBoxInterfaceName.TextChanged += new System.EventHandler(this.textBoxInterfaceName_TextChanged);
             // 
             // Form1

@@ -22,8 +22,6 @@ namespace ArchiveUI
             counter = 0;
             Parameters = GetXMLData();
             FillData();
-            //Hier moet dus nog wat mee
-            textBoxInterfaceName.Visible = false;
         }
 
         //Hier de functies voor het vullen van de velden
@@ -288,8 +286,7 @@ namespace ArchiveUI
                     comboBoxInterfaceName.Visible = true;
                     comboBoxInterfaceName.Select();
                     //cursor verder laten gaan met de combobox.
-                    comboBoxInterfaceName.Select(comboBoxInterfaceName.Text.Length, 0);
-     
+                    comboBoxInterfaceName.Select(comboBoxInterfaceName.Text.Length, 0);     
                 } 
                 else { errorProvider1.SetError(textBoxInterfaceName, textBoxInterfaceName.Name + "Needs to contain a value."); }
             }

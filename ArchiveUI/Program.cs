@@ -101,11 +101,11 @@ namespace ArchiveUI
                                     break;
                                 case "Include":
                                     if (p[3] != null) { p[3] += "\r\n"; }
-                                    p[3] = p[3] + xmlNode.ChildNodes[i].InnerText;
+                                    p[3] += xmlNode.ChildNodes[i].InnerText;
                                     break;
                                 case "Exclude":
                                     if (p[4] != null) { p[4] += "\r\n"; }
-                                    p[4] = p[4] + xmlNode.ChildNodes[i].InnerText;
+                                    p[4] += xmlNode.ChildNodes[i].InnerText;
                                     break;
                                 case "Comments":
                                     p[5] = xmlNode.ChildNodes[i].InnerText;
