@@ -1,0 +1,27 @@
+<?xml version="1.0" standalone="yes"?>
+<ParametersDataSet xmlns="http://tempuri.org/ParametersDataSet.xsd">
+<!-- Each set will be processed, valid parameters are: ProcesDir, ArchiveDir, InterfaceName, Exclude, Include, Retention, Timespan, Recursive -->
+<!-- You can add multiple Exclude parameters, Timespan can be set to D(ay),W(week), M(onth), Y(ear), but also R(emove) --> 
+<!-- If you add one or more Include parameters, it will not use the * flag, so it will only pick the files that are included -->
+<!-- Be sure to use valid XML, as Powershell doesn't like invalid XML. And be careful with these settings, as they can archive and remove files -->
+  <Parameter>
+    <ProcesDir>C:\test</ProcesDir>
+    <ArchiveDir>C:\test\archive</ArchiveDir>
+    <InterfaceName>test</InterfaceName>
+    <Exclude>*_leeg.*</Exclude>
+    <Exclude>y.txt</Exclude>
+    <Exclude>x.dat</Exclude>
+    <Retention>7</Retention>
+    <Timespan>M</Timespan>
+    <Recursive>false</Recursive>
+  </Parameter>
+  <Parameter>
+    <ProcesDir>C:\test2</ProcesDir>
+    <ArchiveDir>C:\test2\archive</ArchiveDir>
+    <InterfaceName>Logs</InterfaceName>
+    <Retention>14</Retention>
+    <Include>*.log</Include>
+    <Timespan>D</Timespan>
+    <Recursive>false</Recursive>
+  </Parameter>
+</ParametersDataSet>
